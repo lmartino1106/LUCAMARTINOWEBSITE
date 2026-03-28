@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Scale, Code, Mail } from "lucide-react";
+import Image from "next/image";
+import { Mail } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 
 export default function Footer() {
@@ -12,12 +13,14 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             {/* Brand */}
             <div className="md:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 border border-primary/20">
-                  <Scale className="w-3 h-3 text-primary absolute -translate-x-0.5" />
-                  <Code className="w-3 h-3 text-accent absolute translate-x-0.5 translate-y-0.5 opacity-60" />
-                </div>
-                <span className="font-bold text-text-primary">Luca Martino</span>
+              <div className="mb-4">
+                <Image
+                  src="/logo-horizontal.jpg"
+                  alt="Luca Martino"
+                  width={160}
+                  height={36}
+                  className="h-9 w-auto"
+                />
               </div>
               <p className="text-sm text-text-secondary max-w-md leading-relaxed">
                 Abogado & Developer. Automatizo estudios jurídicos con IA,

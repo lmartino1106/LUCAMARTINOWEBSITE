@@ -37,7 +37,7 @@ export default function CTASection() {
 
           <Link
             href="/contacto"
-            className="group inline-flex items-center gap-2 rounded-lg bg-primary px-10 py-4 text-base font-semibold text-white hover:bg-primary-dark transition-all hover:gap-3 hover:shadow-[0_0_40px_rgba(14,165,233,0.3)]"
+            className="group inline-flex items-center gap-2 rounded-lg bg-primary px-10 py-4 text-base font-semibold text-white hover:bg-primary-dark transition-all hover:gap-3 hover:shadow-[0_0_40px_rgba(201,168,76,0.3)]"
           >
             Agendar Diagnóstico Gratuito
             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />

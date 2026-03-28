@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Scale, Code } from "lucide-react";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -24,19 +25,15 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg-dark/80 backdrop-blur-xl"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 group-hover:border-primary/40 transition-colors">
-            <Scale className="w-4 h-4 text-primary absolute -translate-x-0.5" />
-            <Code className="w-4 h-4 text-accent absolute translate-x-1 translate-y-0.5 opacity-60" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-tight text-text-primary">
-              Luca Martino
-            </span>
-            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-text-muted">
-              Abogado & Developer
-            </span>
-          </div>
+        <Link href="/" className="flex items-center group">
+          <Image
+            src="/logo-horizontal.jpg"
+            alt="Luca Martino - Abogado · Legal Ops · Tech"
+            width={180}
+            height={40}
+            className="h-10 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop */}
@@ -52,7 +49,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contacto"
-            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors hover:shadow-[0_0_20px_rgba(14,165,233,0.3)]"
+            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors hover:shadow-[0_0_20px_rgba(201,168,76,0.3)]"
           >
             Diagnóstico Gratis
           </Link>

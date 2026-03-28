@@ -74,7 +74,7 @@ export default function CredentialsSection() {
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" staggerDelay={0.08}>
           {credentials.map((cred) => (
             <StaggerItem key={cred.title}>
-              <div className="group rounded-xl border border-border bg-bg-card p-6 hover:border-primary/30 hover:bg-bg-card-hover transition-all duration-300 hover:shadow-[0_0_30px_rgba(14,165,233,0.06)] h-full">
+              <div className="group rounded-xl border border-border bg-bg-card p-6 hover:border-primary/30 hover:bg-bg-card-hover transition-all duration-300 hover:shadow-[0_0_30px_rgba(201,168,76,0.06)] h-full">
                 <div className="flex items-center justify-between mb-4">
                   <cred.icon className="w-5 h-5 text-primary" />
                   <span className="text-xs font-mono text-text-muted">{cred.year}</span>

@@ -119,7 +119,7 @@ export default function HeroSection() {
           >
             <Link
               href="/contacto"
-              className="group inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-white hover:bg-primary-dark transition-all hover:gap-3 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)]"
+              className="group inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-white hover:bg-primary-dark transition-all hover:gap-3 hover:shadow-[0_0_30px_rgba(201,168,76,0.3)]"
             >
               Agenda tu Diagnóstico Gratis
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
