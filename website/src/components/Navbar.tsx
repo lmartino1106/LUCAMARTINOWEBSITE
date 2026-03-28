@@ -3,10 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, Scale, Code } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
-  { href: "/sobre-mi", label: "Sobre M\u00ed" },
+  { href: "/sobre-mi", label: "Sobre Mí" },
   { href: "/servicios", label: "Servicios" },
   { href: "/blog", label: "Blog" },
   { href: "/contacto", label: "Contacto" },
@@ -16,7 +17,12 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg-dark/80 backdrop-blur-xl">
+    <motion.nav
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+      className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg-dark/80 backdrop-blur-xl"
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-2 group">
           <div className="relative flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 group-hover:border-primary/40 transition-colors">
@@ -46,9 +52,9 @@ export default function Navbar() {
           ))}
           <Link
             href="/contacto"
-            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
+            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors hover:shadow-[0_0_20px_rgba(14,165,233,0.3)]"
           >
-            Diagn\u00f3stico Gratis
+            Diagnóstico Gratis
           </Link>
         </div>
 
@@ -63,29 +69,43 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {open && (
-        <div className="md:hidden border-t border-border bg-bg-dark/95 backdrop-blur-xl">
-          <div className="flex flex-col px-6 py-4 gap-4">
-            {navLinks.map((link) => (
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden border-t border-border bg-bg-dark/95 backdrop-blur-xl overflow-hidden"
+          >
+            <div className="flex flex-col px-6 py-4 gap-4">
+              {navLinks.map((link, i) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
+                  <Link
+                    href={link.href}
+                    className="text-text-secondary hover:text-primary transition-colors block"
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
               <Link
-                key={link.href}
-                href={link.href}
-                className="text-text-secondary hover:text-primary transition-colors"
+                href="/contacto"
+                className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white text-center hover:bg-primary-dark transition-colors"
                 onClick={() => setOpen(false)}
               >
-                {link.label}
+                Diagnóstico Gratis
               </Link>
-            ))}
-            <Link
-              href="/contacto"
-              className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white text-center hover:bg-primary-dark transition-colors"
-              onClick={() => setOpen(false)}
-            >
-              Diagn\u00f3stico Gratis
-            </Link>
-          </div>
-        </div>
-      )}
-    </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 }

@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { Send, Mail, Clock, CheckCircle } from "lucide-react";
+import AnimateOnScroll from "@/components/AnimateOnScroll";
 
 const serviceOptions = [
-  "Diagn\u00f3stico Digital (Gratis)",
+  "Diagnóstico Digital (Gratis)",
   "IA para Abogados",
-  "Automatizaci\u00f3n de Procesos Legales",
+  "Automatización de Procesos Legales",
   "Web + Embudo Comercial",
   "Software a Medida",
   "Otro",
@@ -48,22 +49,24 @@ export default function ContactoPage() {
       <section className="py-20 grid-bg relative">
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[400px] bg-primary/8 rounded-full blur-[150px]" />
         <div className="relative z-10 mx-auto max-w-6xl px-6">
-          <div className="text-center mb-16">
-            <span className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-4 block">
-              Contacto
-            </span>
-            <h1 className="text-4xl md:text-6xl font-bold text-text-primary mb-6">
-              Hablemos de tu <span className="gradient-text">proyecto</span>
-            </h1>
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Agenda un diagn\u00f3stico gratuito de 30 minutos o cu\u00e9ntame sobre tu
-              proyecto. Respondo en menos de 24 horas.
-            </p>
-          </div>
+          <AnimateOnScroll>
+            <div className="text-center mb-16">
+              <span className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-4 block">
+                Contacto
+              </span>
+              <h1 className="text-4xl md:text-6xl font-bold text-text-primary mb-6">
+                Hablemos de tu <span className="gradient-text">proyecto</span>
+              </h1>
+              <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+                Agenda un diagnóstico gratuito de 30 minutos o cuéntame sobre tu
+                proyecto. Respondo en menos de 24 horas.
+              </p>
+            </div>
+          </AnimateOnScroll>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
             {/* Form */}
-            <div className="lg:col-span-3">
+            <AnimateOnScroll direction="left" className="lg:col-span-3">
               <form
                 onSubmit={handleSubmit}
                 className="rounded-2xl border border-border bg-bg-card p-8 space-y-6"
@@ -99,7 +102,7 @@ export default function ContactoPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="text-xs font-mono uppercase tracking-wider text-text-muted block mb-2">
-                      Tel\u00e9fono
+                      Teléfono
                     </label>
                     <input
                       type="tel"
@@ -124,7 +127,7 @@ export default function ContactoPage() {
                 </div>
                 <div>
                   <label className="text-xs font-mono uppercase tracking-wider text-text-muted block mb-2">
-                    Servicio de inter\u00e9s
+                    Servicio de interés
                   </label>
                   <select
                     value={form.service}
@@ -149,7 +152,7 @@ export default function ContactoPage() {
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className="w-full rounded-lg border border-border bg-bg-dark px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:border-primary focus:outline-none transition-colors resize-none"
-                    placeholder="Cu\u00e9ntame sobre tu proyecto o qu\u00e9 necesitas automatizar..."
+                    placeholder="Cuéntame sobre tu proyecto o qué necesitas automatizar..."
                   />
                 </div>
 
@@ -173,26 +176,26 @@ export default function ContactoPage() {
 
                 {status === "error" && (
                   <p className="text-sm text-red-400 text-center">
-                    Error al enviar. Int\u00e9ntalo de nuevo o escr\u00edbeme directamente.
+                    Error al enviar. Inténtalo de nuevo o escríbeme directamente.
                   </p>
                 )}
               </form>
-            </div>
+            </AnimateOnScroll>
 
             {/* Sidebar */}
-            <div className="lg:col-span-2 space-y-6">
+            <AnimateOnScroll direction="right" delay={0.2} className="lg:col-span-2 space-y-6">
               <div className="rounded-2xl border border-primary/30 bg-primary/5 p-8">
                 <Clock className="w-8 h-8 text-primary mb-4" />
                 <h3 className="text-lg font-bold text-text-primary mb-2">
-                  Diagn\u00f3stico Gratuito
+                  Diagnóstico Gratuito
                 </h3>
                 <p className="text-sm text-text-secondary leading-relaxed mb-4">
                   30 minutos donde analizamos tu estudio, identificamos 2-3 quick wins
-                  y dise\u00f1amos un roadmap de mejora.
+                  y diseñamos un roadmap de mejora.
                 </p>
                 <ul className="space-y-2">
                   {[
-                    "An\u00e1lisis de procesos actuales",
+                    "Análisis de procesos actuales",
                     "Quick wins inmediatos",
                     "Roadmap personalizado",
                     "Sin compromiso",
@@ -228,7 +231,7 @@ export default function ContactoPage() {
                   </a>
                 </div>
               </div>
-            </div>
+            </AnimateOnScroll>
           </div>
         </div>
       </section>

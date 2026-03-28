@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { ArrowRight, Terminal, Shield, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const roles = [
-  "Automatizo estudios jur\u00eddicos con IA",
+  "Automatizo estudios jurídicos con IA",
   "Construyo software legal a medida",
   "Implemento agentes de IA para abogados",
-  "Dise\u00f1o embudos de captaci\u00f3n legal",
+  "Diseño embudos de captación legal",
 ];
 
 export default function HeroSection() {
@@ -43,51 +44,84 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center grid-bg overflow-hidden">
-      {/* Gradient orbs */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/8 rounded-full blur-[120px]" />
+      {/* Animated gradient orbs */}
+      <motion.div
+        className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"
+        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/8 rounded-full blur-[120px]"
+        animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 pt-32 pb-20">
         <div className="flex flex-col items-center text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 mb-8"
+          >
             <div className="w-2 h-2 rounded-full bg-success pulse-ring" />
             <span className="text-xs font-mono text-primary">
               Disponible para nuevos proyectos
             </span>
-          </div>
+          </motion.div>
 
           {/* Title */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
+          >
             <span className="text-text-primary">Luca Martino</span>
             <br />
             <span className="gradient-text">Abogado & Developer</span>
-          </h1>
+          </motion.h1>
 
           {/* Typing effect */}
-          <div className="h-8 flex items-center mb-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+            className="h-8 flex items-center mb-8"
+          >
             <Terminal className="w-4 h-4 text-primary mr-2" />
             <span className="font-mono text-text-secondary">
               {displayed}
               <span className="text-primary animate-pulse">|</span>
             </span>
-          </div>
+          </motion.div>
 
           {/* Description */}
-          <p className="max-w-2xl text-lg text-text-secondary leading-relaxed mb-10">
-            Mejor rendimiento acad\u00e9mico en Derecho, U. Mayor. Proyecto LegalTech
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.6 }}
+            className="max-w-2xl text-lg text-text-secondary leading-relaxed mb-10"
+          >
+            Mejor rendimiento académico en Derecho, U. Mayor. Proyecto LegalTech
             seleccionado para INCUBA UC. Ponente internacional sobre IA y Derecho.
-            <span className="text-text-primary font-medium"> Combino derecho y c\u00f3digo para
-            transformar la pr\u00e1ctica legal.</span>
-          </p>
+            <span className="text-text-primary font-medium"> Combino derecho y código para
+            transformar la práctica legal.</span>
+          </motion.p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4"
+          >
             <Link
               href="/contacto"
-              className="group inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-white hover:bg-primary-dark transition-all hover:gap-3"
+              className="group inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-white hover:bg-primary-dark transition-all hover:gap-3 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)]"
             >
-              Agenda tu Diagn\u00f3stico Gratis
+              Agenda tu Diagnóstico Gratis
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
@@ -96,26 +130,33 @@ export default function HeroSection() {
             >
               Ver Servicios
             </Link>
-          </div>
+          </motion.div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 mt-16 pt-16 border-t border-border">
-            <div className="flex flex-col items-center">
-              <Shield className="w-5 h-5 text-primary mb-2" />
-              <span className="text-2xl md:text-3xl font-bold text-text-primary">N\u00b01</span>
-              <span className="text-xs text-text-muted mt-1">Rendimiento Acad\u00e9mico</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <Zap className="w-5 h-5 text-accent mb-2" />
-              <span className="text-2xl md:text-3xl font-bold text-text-primary">INCUBA UC</span>
-              <span className="text-xs text-text-muted mt-1">Proyecto Seleccionado</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <Terminal className="w-5 h-5 text-primary mb-2" />
-              <span className="text-2xl md:text-3xl font-bold text-text-primary">Full Stack</span>
-              <span className="text-xs text-text-muted mt-1">Abogado + Developer</span>
-            </div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.0 }}
+            className="grid grid-cols-3 gap-8 mt-16 pt-16 border-t border-border"
+          >
+            {[
+              { icon: Shield, value: "N°1", label: "Rendimiento Académico", color: "text-primary" },
+              { icon: Zap, value: "INCUBA UC", label: "Proyecto Seleccionado", color: "text-accent" },
+              { icon: Terminal, value: "Full Stack", label: "Abogado + Developer", color: "text-primary" },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                className="flex flex-col items-center"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 1.2 + i * 0.15 }}
+              >
+                <stat.icon className={`w-5 h-5 ${stat.color} mb-2`} />
+                <span className="text-2xl md:text-3xl font-bold text-text-primary">{stat.value}</span>
+                <span className="text-xs text-text-muted mt-1">{stat.label}</span>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>

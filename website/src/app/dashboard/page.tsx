@@ -19,6 +19,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import DashboardAuth from "@/components/DashboardAuth";
 
 interface BrandMetrics {
   linkedin_followers: number;
@@ -66,14 +67,14 @@ const demoMetrics: BrandMetrics = {
 
 const demoPosts: ContentPost[] = [
   { id: "1", title: "Soy abogado y programo. Esta es mi historia.", pillar: "opinion", status: "draft", scheduled_date: "2026-03-31", impressions: 0, likes: 0, comments: 0 },
-  { id: "2", title: "5 tareas que todo abogado deber\u00eda automatizar hoy", pillar: "tutorial", status: "idea", scheduled_date: "2026-04-02", impressions: 0, likes: 0, comments: 0 },
+  { id: "2", title: "5 tareas que todo abogado debería automatizar hoy", pillar: "tutorial", status: "idea", scheduled_date: "2026-04-02", impressions: 0, likes: 0, comments: 0 },
   { id: "3", title: "El abogado del futuro no compite contra la IA, la usa", pillar: "opinion", status: "idea", scheduled_date: "2026-04-04", impressions: 0, likes: 0, comments: 0 },
 ];
 
 const demoPrompts: DailyPrompt[] = [
-  { id: "1", date: "2026-03-31", day_of_week: "Lunes", prompt_type: "educativo", prompt_text: "Escribe un post educativo sobre una norma o ley relevante. Valida con Magnar AI.", topic_suggestion: "Ley 21.719 - Protecci\u00f3n de Datos: \u00bfqu\u00e9 deben preparar los estudios?", completed: false },
-  { id: "2", date: "2026-04-02", day_of_week: "Mi\u00e9rcoles", prompt_type: "tutorial", prompt_text: "Comparte un tutorial pr\u00e1ctico o caso de uso real de automatizaci\u00f3n/IA en el derecho.", topic_suggestion: "5 tareas que todo abogado deber\u00eda automatizar hoy", completed: false },
-  { id: "3", date: "2026-04-04", day_of_week: "Viernes", prompt_type: "opinion", prompt_text: "Comparte una opini\u00f3n provocadora o storytelling sobre derecho y tecnolog\u00eda.", topic_suggestion: "El abogado del futuro no compite contra la IA, la usa", completed: false },
+  { id: "1", date: "2026-03-31", day_of_week: "Lunes", prompt_type: "educativo", prompt_text: "Escribe un post educativo sobre una norma o ley relevante. Valida con Magnar AI.", topic_suggestion: "Ley 21.719 - Protección de Datos: \u00bfqué deben preparar los estudios?", completed: false },
+  { id: "2", date: "2026-04-02", day_of_week: "Miércoles", prompt_type: "tutorial", prompt_text: "Comparte un tutorial práctico o caso de uso real de automatización/IA en el derecho.", topic_suggestion: "5 tareas que todo abogado debería automatizar hoy", completed: false },
+  { id: "3", date: "2026-04-04", day_of_week: "Viernes", prompt_type: "opinion", prompt_text: "Comparte una opinión provocadora o storytelling sobre derecho y tecnología.", topic_suggestion: "El abogado del futuro no compite contra la IA, la usa", completed: false },
 ];
 
 const pillarColors: Record<string, string> = {
@@ -130,12 +131,13 @@ export default function DashboardPage() {
     { label: "Engagement Rate", value: `${metrics.linkedin_engagement_rate}%`, icon: TrendingUp, change: 0 },
     { label: "Visitas Web", value: metrics.website_visits, icon: BarChart3, change: 0 },
     { label: "Formularios Recibidos", value: metrics.contact_form_submissions, icon: MessageSquare, change: 0 },
-    { label: "Diagn\u00f3sticos Agendados", value: metrics.diagnostics_scheduled, icon: Calendar, change: 0 },
+    { label: "Diagnósticos Agendados", value: metrics.diagnostics_scheduled, icon: Calendar, change: 0 },
     { label: "Nuevas Conexiones", value: metrics.new_connections, icon: Users, change: 0 },
     { label: "Mensajes Directos", value: metrics.direct_messages, icon: MessageSquare, change: 0 },
   ];
 
   return (
+    <DashboardAuth>
     <div className="pt-24 pb-20">
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
@@ -145,7 +147,7 @@ export default function DashboardPage() {
               Dashboard de Marca Personal
             </h1>
             <p className="text-text-secondary">
-              M\u00e9tricas, contenido y prompts diarios para tu estrategia de posicionamiento.
+              Métricas, contenido y prompts diarios para tu estrategia de posicionamiento.
             </p>
           </div>
           <button
@@ -219,7 +221,7 @@ export default function DashboardPage() {
                   { label: "Impresiones/post", current: 0, target: 500 },
                   { label: "Nuevas conexiones", current: metrics.new_connections, target: 200 },
                   { label: "Mensajes directos", current: metrics.direct_messages, target: 10 },
-                  { label: "Diagn\u00f3sticos", current: metrics.diagnostics_scheduled, target: 3 },
+                  { label: "Diagnósticos", current: metrics.diagnostics_scheduled, target: 3 },
                 ].map((kpi) => {
                   const pct = kpi.target > 0 ? Math.min((kpi.current / kpi.target) * 100, 100) : 0;
                   return (
@@ -285,8 +287,8 @@ export default function DashboardPage() {
             <div className="rounded-xl border border-primary/30 bg-primary/5 p-6 mb-6">
               <h3 className="text-lg font-bold text-text-primary mb-2">Sistema de Prompts Diarios</h3>
               <p className="text-sm text-text-secondary">
-                Cada d\u00eda de publicaci\u00f3n (Lun, Mi\u00e9, Vie) tienes un prompt con el tipo de contenido
-                y sugerencia de tema. T\u00fa decides qu\u00e9 escribir cada d\u00eda.
+                Cada día de publicación (Lun, Mié, Vie) tienes un prompt con el tipo de contenido
+                y sugerencia de tema. T\u00fa decides qué escribir cada día.
               </p>
             </div>
             {prompts.map((prompt) => (
@@ -335,21 +337,21 @@ export default function DashboardPage() {
                   <thead>
                     <tr className="border-b border-border">
                       <th className="text-left py-3 text-xs font-mono uppercase text-text-muted">Keyword</th>
-                      <th className="text-center py-3 text-xs font-mono uppercase text-text-muted">Posici\u00f3n</th>
+                      <th className="text-center py-3 text-xs font-mono uppercase text-text-muted">Posición</th>
                       <th className="text-center py-3 text-xs font-mono uppercase text-text-muted">Volumen</th>
                       <th className="text-center py-3 text-xs font-mono uppercase text-text-muted">Dificultad</th>
-                      <th className="text-left py-3 text-xs font-mono uppercase text-text-muted">P\u00e1gina</th>
+                      <th className="text-left py-3 text-xs font-mono uppercase text-text-muted">Página</th>
                     </tr>
                   </thead>
                   <tbody>
                     {[
                       { keyword: "abogado legaltech chile", position: "--", volume: "110", difficulty: "low", page: "/" },
-                      { keyword: "automatizaci\u00f3n legal chile", position: "--", volume: "90", difficulty: "low", page: "/servicios" },
+                      { keyword: "automatización legal chile", position: "--", volume: "90", difficulty: "low", page: "/servicios" },
                       { keyword: "ia para abogados", position: "--", volume: "320", difficulty: "medium", page: "/blog" },
                       { keyword: "legal ops chile", position: "--", volume: "50", difficulty: "low", page: "/sobre-mi" },
-                      { keyword: "software jur\u00eddico chile", position: "--", volume: "210", difficulty: "medium", page: "/servicios" },
+                      { keyword: "software jurídico chile", position: "--", volume: "210", difficulty: "medium", page: "/servicios" },
                       { keyword: "abogado y programador", position: "--", volume: "70", difficulty: "low", page: "/" },
-                      { keyword: "protecci\u00f3n datos personales chile", position: "--", volume: "480", difficulty: "high", page: "/blog" },
+                      { keyword: "protección datos personales chile", position: "--", volume: "480", difficulty: "high", page: "/blog" },
                       { keyword: "luca martino abogado", position: "--", volume: "10", difficulty: "low", page: "/" },
                     ].map((kw) => (
                       <tr key={kw.keyword} className="border-b border-border/50 hover:bg-bg-card-hover">
@@ -377,7 +379,7 @@ export default function DashboardPage() {
               <h3 className="text-lg font-bold text-text-primary mb-4">Checklist SEO</h3>
               <div className="space-y-3">
                 {[
-                  { task: "Meta tags optimizados en todas las p\u00e1ginas", done: true },
+                  { task: "Meta tags optimizados en todas las páginas", done: true },
                   { task: "Schema.org (Person + ProfessionalService) implementado", done: true },
                   { task: "Sitemap.xml generado", done: true },
                   { task: "Robots.txt configurado", done: true },
@@ -401,5 +403,6 @@ export default function DashboardPage() {
         )}
       </div>
     </div>
+    </DashboardAuth>
   );
 }
