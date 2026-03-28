@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   BarChart3,
   Users,
@@ -16,7 +16,9 @@ import {
   ArrowDown,
   Minus,
   PenTool,
+  RefreshCw,
 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 interface BrandMetrics {
   linkedin_followers: number;
@@ -92,6 +94,35 @@ export default function DashboardPage() {
   const [posts, setPosts] = useState<ContentPost[]>(demoPosts);
   const [prompts, setPrompts] = useState<DailyPrompt[]>(demoPrompts);
   const [activeTab, setActiveTab] = useState<"overview" | "content" | "prompts" | "seo">("overview");
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const [metricsRes, postsRes, promptsRes] = await Promise.all([
+        supabase.from("brand_metrics").select("*").order("week_start", { ascending: false }).limit(1),
+        supabase.from("content_posts").select("*").order("scheduled_date", { ascending: true }),
+        supabase.from("daily_prompts").select("*").order("date", { ascending: true }),
+      ]);
+
+      if (metricsRes.data && metricsRes.data.length > 0) {
+        setMetrics(metricsRes.data[0]);
+      }
+      if (postsRes.data && postsRes.data.length > 0) {
+        setPosts(postsRes.data);
+      }
+      if (promptsRes.data && promptsRes.data.length > 0) {
+        setPrompts(promptsRes.data);
+      }
+    } catch (err) {
+      console.error("Error fetching dashboard data:", err);
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const metricCards = [
     { label: "Seguidores LinkedIn", value: metrics.linkedin_followers, icon: Users, change: 0 },
@@ -108,13 +139,23 @@ export default function DashboardPage() {
     <div className="pt-24 pb-20">
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-text-primary mb-2">
-            Dashboard de Marca Personal
-          </h1>
-          <p className="text-text-secondary">
-            M\u00e9tricas, contenido y prompts diarios para tu estrategia de posicionamiento.
-          </p>
+        <div className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-text-primary mb-2">
+              Dashboard de Marca Personal
+            </h1>
+            <p className="text-text-secondary">
+              M\u00e9tricas, contenido y prompts diarios para tu estrategia de posicionamiento.
+            </p>
+          </div>
+          <button
+            onClick={fetchData}
+            disabled={loading}
+            className="flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm text-text-secondary hover:text-primary hover:border-primary/40 transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+            {loading ? "Cargando..." : "Actualizar"}
+          </button>
         </div>
 
         {/* Tabs */}
