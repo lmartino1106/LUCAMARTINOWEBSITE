@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, Terminal, Shield, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import TechBackground from "./TechBackground";
 
 const roles = [
   "Automatizo estudios jurídicos con IA",
@@ -44,17 +45,8 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center grid-bg overflow-hidden">
-      {/* Animated gradient orbs */}
-      <motion.div
-        className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"
-        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/8 rounded-full blur-[120px]"
-        animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* Full tech animated background */}
+      <TechBackground />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 pt-32 pb-20">
         <div className="flex flex-col items-center text-center">
