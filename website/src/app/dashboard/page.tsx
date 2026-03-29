@@ -19,6 +19,7 @@ import {
   X,
   Edit3,
   Trash2,
+  Sparkles,
 } from "lucide-react";
 import DashboardAuth from "@/components/DashboardAuth";
 
@@ -98,7 +99,7 @@ export default function DashboardPage() {
   const [metrics, setMetrics] = useState<BrandMetrics>(demoMetrics);
   const [posts, setPosts] = useState<ContentPost[]>(demoPosts);
   const [prompts, setPrompts] = useState<DailyPrompt[]>(demoPrompts);
-  const [activeTab, setActiveTab] = useState<"overview" | "content" | "prompts" | "seo">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "content" | "prompts" | "seo" | "crear">("overview");
   const [loading, setLoading] = useState(true);
   const [editingMetrics, setEditingMetrics] = useState(false);
   const [metricsForm, setMetricsForm] = useState<BrandMetrics>(demoMetrics);
@@ -106,6 +107,10 @@ export default function DashboardPage() {
   const [newPostForm, setNewPostForm] = useState({ title: "", pillar: "educativo", scheduled_date: "" });
   const [showNewPost, setShowNewPost] = useState(false);
   const [contacts, setContacts] = useState<{ id: string; name: string; email: string; service: string; created_at: string }[]>([]);
+  const [contentType, setContentType] = useState<"reel" | "carrusel" | "post" | "presentacion">("post");
+  const [contentPrompt, setContentPrompt] = useState("");
+  const [generatedContent, setGeneratedContent] = useState<Record<string, unknown> | null>(null);
+  const [generating, setGenerating] = useState(false);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -235,6 +240,26 @@ export default function DashboardPage() {
     }
   }
 
+  async function generateContent() {
+    if (!contentPrompt) return;
+    setGenerating(true);
+    setGeneratedContent(null);
+    try {
+      const res = await fetch("/api/content/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: contentType, prompt: contentPrompt }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setGeneratedContent(data.content);
+      }
+    } catch (err) {
+      console.error("Error generating:", err);
+    }
+    setGenerating(false);
+  }
+
   const metricFields: { key: keyof BrandMetrics; label: string; icon: typeof Users }[] = [
     { key: "linkedin_followers", label: "Seguidores LinkedIn", icon: Users },
     { key: "linkedin_impressions", label: "Impresiones Semanales", icon: Eye },
@@ -277,6 +302,7 @@ export default function DashboardPage() {
             { key: "content", label: "Contenido", icon: FileText },
             { key: "prompts", label: "Prompts", icon: PenTool },
             { key: "seo", label: "SEO", icon: Target },
+            { key: "crear", label: "Crear", icon: Sparkles },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -633,6 +659,139 @@ export default function DashboardPage() {
                 ))}
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Crear Tab */}
+        {activeTab === "crear" && (
+          <div className="space-y-6">
+            <div className="rounded-xl border border-primary/30 bg-primary/5 p-6">
+              <h3 className="text-lg font-bold text-text-primary mb-2">Generador de Contenido con IA</h3>
+              <p className="text-sm text-text-secondary mb-6">
+                Selecciona el tipo de contenido, escribe un tema y deja que la IA genere el texto.
+              </p>
+
+              {/* Type selector */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {[
+                  { key: "post", label: "Post LinkedIn" },
+                  { key: "reel", label: "Reel/Short" },
+                  { key: "carrusel", label: "Carrusel IG" },
+                  { key: "presentacion", label: "Presentacion" },
+                ].map((t) => (
+                  <button
+                    key={t.key}
+                    onClick={() => setContentType(t.key as typeof contentType)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      contentType === t.key
+                        ? "bg-primary text-white"
+                        : "bg-bg-card border border-border text-text-muted hover:text-text-primary"
+                    }`}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Prompt */}
+              <textarea
+                value={contentPrompt}
+                onChange={(e) => setContentPrompt(e.target.value)}
+                placeholder="Ej: 5 razones por las que un abogado necesita automatizar su estudio..."
+                rows={3}
+                className="w-full rounded-lg border border-border bg-bg-dark px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:border-primary focus:outline-none transition-colors resize-none mb-4"
+              />
+
+              <button
+                onClick={generateContent}
+                disabled={generating || !contentPrompt}
+                className="flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors disabled:opacity-50"
+              >
+                {generating ? (
+                  <><RefreshCw className="w-4 h-4 animate-spin" /> Generando...</>
+                ) : (
+                  <><Sparkles className="w-4 h-4" /> Generar con IA</>
+                )}
+              </button>
+            </div>
+
+            {/* Results */}
+            {generatedContent && (
+              <div className="rounded-xl border border-border bg-bg-card p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold text-text-primary">Contenido Generado</h3>
+                  <button
+                    onClick={() => navigator.clipboard.writeText(JSON.stringify(generatedContent, null, 2))}
+                    className="flex items-center gap-2 text-sm text-primary hover:text-accent transition-colors"
+                  >
+                    <FileText className="w-4 h-4" /> Copiar
+                  </button>
+                </div>
+
+                {contentType === "post" && (
+                  <div>
+                    <p className="text-text-secondary whitespace-pre-wrap leading-relaxed text-sm">
+                      {(generatedContent as { text?: string }).text}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {((generatedContent as { hashtags?: string[] }).hashtags || []).map((tag: string) => (
+                        <span key={tag} className="text-xs font-mono px-2 py-1 rounded bg-primary/10 text-primary">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {contentType === "reel" && (
+                  <div>
+                    <h4 className="text-xl font-bold text-text-primary mb-4">
+                      {(generatedContent as { title?: string }).title}
+                    </h4>
+                    <ul className="space-y-2">
+                      {((generatedContent as { points?: string[] }).points || []).map((point: string, i: number) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-text-secondary">
+                          <span className="text-accent mt-0.5">●</span> {point}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-sm text-primary mt-4 font-semibold">
+                      {(generatedContent as { cta?: string }).cta}
+                    </p>
+                  </div>
+                )}
+
+                {contentType === "carrusel" && (
+                  <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                    {((generatedContent as { slides?: { title: string; subtitle: string }[] }).slides || []).map((slide: { title: string; subtitle: string }, i: number) => (
+                      <div key={i} className="rounded-lg border border-border bg-bg-dark p-4 text-center">
+                        <span className="text-[10px] font-mono text-text-muted">Slide {i + 1}</span>
+                        <p className="text-sm font-bold text-text-primary mt-1">{slide.title}</p>
+                        <p className="text-xs text-text-secondary mt-1">{slide.subtitle}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {contentType === "presentacion" && (
+                  <div>
+                    <p className="text-lg text-text-primary font-semibold mb-3">
+                      {(generatedContent as { tagline?: string }).tagline}
+                    </p>
+                    <ul className="space-y-2 mb-4">
+                      {((generatedContent as { credentials?: string[] }).credentials || []).map((cred: string, i: number) => (
+                        <li key={i} className="flex items-center gap-2 text-sm text-text-secondary">
+                          <CheckCircle className="w-4 h-4 text-success" /> {cred}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-sm text-primary font-semibold">
+                      {(generatedContent as { cta?: string }).cta}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>
