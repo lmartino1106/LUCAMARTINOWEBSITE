@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, BookOpen, Calendar, ChevronRight } from "lucide-react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { getPostBySlug, posts } from "@/lib/blog-data";
-import BlogPostClient from "./BlogPostClient";
+import BlogPostClient, { MarkdownContent } from "./BlogPostClient";
 
 const pillarColors: Record<string, string> = {
   Tutorial: "text-accent border-accent/30 bg-accent/5",
@@ -78,14 +76,8 @@ export default async function BlogPostPage({ params }: Props) {
             </header>
           </BlogPostClient>
 
-          {/* Content */}
-          <BlogPostClient delay={0.1}>
-            <div className="prose-blog">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {post.content}
-              </ReactMarkdown>
-            </div>
-          </BlogPostClient>
+          {/* Content - Client Component with react-markdown */}
+          <MarkdownContent content={post.content} />
 
           {/* Author */}
           <BlogPostClient delay={0.2}>

@@ -136,19 +136,33 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="hidden lg:flex justify-center"
           >
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 rounded-2xl blur-2xl" />
-              <div className="relative rounded-2xl border border-primary/20 overflow-hidden shadow-[0_0_60px_rgba(14,165,233,0.15)]">
-                <Image
-                  src="/luca-photo.jpg"
-                  alt="Luca Martino Acevedo - Abogado & Developer"
-                  width={450}
-                  height={550}
-                  className="object-cover"
-                  priority
-                />
+            <div className="relative group">
+              {/* Animated neon glow */}
+              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] animate-[shimmer_3s_linear_infinite] opacity-75 blur-lg" />
+              <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-primary/30 via-transparent to-accent/30 blur-2xl animate-pulse" />
+
+              {/* Neon border frame */}
+              <div className="relative rounded-2xl p-[2px] bg-gradient-to-br from-primary via-accent to-primary bg-[length:200%_200%] animate-[shimmer_3s_linear_infinite]">
+                <div className="rounded-2xl overflow-hidden bg-bg-dark">
+                  <Image
+                    src="/luca-photo.jpg"
+                    alt="Luca Martino Acevedo - Abogado & Developer"
+                    width={450}
+                    height={550}
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    priority
+                  />
+                </div>
               </div>
-              <div className="absolute -bottom-3 -right-3 bg-bg-dark border border-primary/30 rounded-xl px-4 py-2 backdrop-blur-sm">
+
+              {/* Corner accents */}
+              <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg" />
+              <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-primary rounded-tr-lg" />
+              <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary rounded-bl-lg" />
+              <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg" />
+
+              {/* Badge */}
+              <div className="absolute -bottom-4 -right-4 bg-bg-dark/90 border border-primary/40 rounded-xl px-4 py-2 backdrop-blur-sm shadow-[0_0_20px_rgba(14,165,233,0.2)]">
                 <span className="text-xs font-mono text-primary">Abogado + Full Stack Dev</span>
               </div>
             </div>

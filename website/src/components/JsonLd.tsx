@@ -51,7 +51,7 @@ export default function JsonLd() {
     description:
       "Abogado litigante y desarrollador. Automatización legal, IA para abogados, asesoría legal, desarrollo web y software a medida para estudios jurídicos en Chile.",
     url: "https://lucamartino.cl/servicios",
-    email: "contacto@lucamartino.cl",
+    email: "lucamartinoacevedo@gmail.com",
     provider: {
       "@type": "Person",
       name: "Luca Martino Acevedo",

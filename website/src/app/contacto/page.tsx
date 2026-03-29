@@ -215,11 +215,11 @@ export default function ContactoPage() {
                 </h3>
                 <div className="space-y-4">
                   <a
-                    href="mailto:contacto@lucamartino.cl"
+                    href="mailto:lucamartinoacevedo@gmail.com"
                     className="flex items-center gap-3 text-sm text-text-secondary hover:text-primary transition-colors"
                   >
                     <Mail className="w-4 h-4" />
-                    contacto@lucamartino.cl
+                    lucamartinoacevedo@gmail.com
                   </a>
                   <a
                     href="https://www.linkedin.com/in/lucamartinoacevedo"

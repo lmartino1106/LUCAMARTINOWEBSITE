@@ -124,6 +124,13 @@ body {
   animation: pulse-ring 2s ease-in-out infinite;
 }
 
+/* Neon shimmer for photo frame */
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 /* Blog prose styling for react-markdown */
 .prose-blog h2 {
   font-size: 1.5rem;
