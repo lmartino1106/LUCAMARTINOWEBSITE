@@ -49,7 +49,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contacto"
-            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors hover:shadow-[0_0_20px_rgba(201,168,76,0.3)]"
+            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors hover:shadow-[0_0_20px_rgba(14,165,233,0.3)]"
           >
             Diagnóstico Gratis
           </Link>

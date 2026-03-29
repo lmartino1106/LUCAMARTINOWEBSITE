@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
+import { Resend } from "resend";
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function POST(request: Request) {
   try {
@@ -30,6 +33,30 @@ export async function POST(request: Request) {
         { error: "Error al guardar el mensaje" },
         { status: 500 }
       );
+    }
+
+    // Send email notification
+    if (resend) {
+      try {
+        await resend.emails.send({
+          from: "Formulario Web <onboarding@resend.dev>",
+          to: "lucamartinoacevedo@gmail.com",
+          subject: `Nuevo contacto: ${name} - ${service || "Sin servicio especificado"}`,
+          html: `
+            <h2>Nuevo mensaje desde tu web</h2>
+            <p><strong>Nombre:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Teléfono:</strong> ${phone || "No proporcionado"}</p>
+            <p><strong>Empresa:</strong> ${company || "No proporcionada"}</p>
+            <p><strong>Servicio:</strong> ${service || "No especificado"}</p>
+            <hr />
+            <p><strong>Mensaje:</strong></p>
+            <p>${message}</p>
+          `,
+        });
+      } catch (emailErr) {
+        console.error("Email error:", emailErr);
+      }
     }
 
     return NextResponse.json({ success: true });

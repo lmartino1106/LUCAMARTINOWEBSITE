@@ -61,7 +61,7 @@ export default function ServicesSection() {
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6" staggerDelay={0.15}>
           {services.map((service) => (
             <StaggerItem key={service.title}>
-              <div className="group relative rounded-2xl border border-border bg-bg-card p-8 hover:border-primary/30 hover:bg-bg-card-hover transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,168,76,0.08)] h-full">
+              <div className="group relative rounded-2xl border border-border bg-bg-card p-8 hover:border-primary/30 hover:bg-bg-card-hover transition-all duration-300 hover:shadow-[0_0_40px_rgba(14,165,233,0.08)] h-full">
                 <div
                   className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
                     service.color === "primary"

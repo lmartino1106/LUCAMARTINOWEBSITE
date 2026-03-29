@@ -3,27 +3,39 @@
 import { useState, useEffect } from "react";
 import { Lock, ArrowRight } from "lucide-react";
 
-const DASHBOARD_PASSWORD = "luca2026";
-
 export default function DashboardAuth({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const stored = sessionStorage.getItem("dashboard_auth");
     if (stored === "true") setAuthenticated(true);
   }, []);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (password === DASHBOARD_PASSWORD) {
-      setAuthenticated(true);
-      sessionStorage.setItem("dashboard_auth", "true");
-      setError(false);
-    } else {
+    setLoading(true);
+    setError(false);
+
+    try {
+      const res = await fetch("/api/dashboard/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      if (res.ok) {
+        setAuthenticated(true);
+        sessionStorage.setItem("dashboard_auth", "true");
+      } else {
+        setError(true);
+      }
+    } catch {
       setError(true);
     }
+    setLoading(false);
   }
 
   if (authenticated) return <>{children}</>;
@@ -55,9 +67,10 @@ export default function DashboardAuth({ children }: { children: React.ReactNode 
             )}
             <button
               type="submit"
-              className="w-full rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors flex items-center justify-center gap-2"
+              disabled={loading}
+              className="w-full rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              Entrar <ArrowRight className="w-4 h-4" />
+              {loading ? "Verificando..." : <>Entrar <ArrowRight className="w-4 h-4" /></>}
             </button>
           </form>
         </div>

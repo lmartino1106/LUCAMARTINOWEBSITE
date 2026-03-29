@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #c9a84c;
-  --color-primary-dark: #b8943f;
-  --color-accent: #d4b96a;
-  --color-bg-dark: #0b1120;
-  --color-bg-card: #0f1729;
-  --color-bg-card-hover: #152035;
+  --color-primary: #0ea5e9;
+  --color-primary-dark: #0284c7;
+  --color-accent: #22d3ee;
+  --color-bg-dark: #0a0a0f;
+  --color-bg-card: #111118;
+  --color-bg-card-hover: #1a1a24;
   --color-border: #1e293b;
   --color-text-primary: #f1f5f9;
   --color-text-secondary: #94a3b8;
@@ -15,7 +15,7 @@
   --color-warning: #f59e0b;
   --color-gold: #c9a84c;
   --color-gold-light: #d4b96a;
-  --color-navy: #0b1120;
+  --color-navy: #0a0a0f;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 }
@@ -50,23 +50,23 @@ body {
 /* Grid background effect */
 .grid-bg {
   background-image:
-    linear-gradient(rgba(201, 168, 76, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201, 168, 76, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
 /* Glow effects */
 .glow-blue {
-  box-shadow: 0 0 40px rgba(201, 168, 76, 0.15);
+  box-shadow: 0 0 40px rgba(14, 165, 233, 0.15);
 }
 
 .glow-text {
-  text-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+  text-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
 }
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #c9a84c, #d4b96a, #c9a84c);
+  background: linear-gradient(135deg, #0ea5e9, #22d3ee, #0ea5e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -82,7 +82,7 @@ body {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, #c9a84c, transparent, #d4b96a);
+  background: linear-gradient(135deg, #0ea5e9, transparent, #22d3ee);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   -webkit-mask-composite: xor;
@@ -122,4 +122,119 @@ body {
 }
 .pulse-ring {
   animation: pulse-ring 2s ease-in-out infinite;
+}
+
+/* Blog prose styling for react-markdown */
+.prose-blog h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+.prose-blog h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.prose-blog p {
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.prose-blog strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+.prose-blog a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s;
+}
+.prose-blog a:hover {
+  color: var(--color-accent);
+}
+.prose-blog ul, .prose-blog ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+.prose-blog ul {
+  list-style-type: disc;
+}
+.prose-blog ol {
+  list-style-type: decimal;
+}
+.prose-blog li {
+  color: var(--color-text-secondary);
+  margin: 0.25rem 0;
+  line-height: 1.75;
+}
+.prose-blog blockquote {
+  border-left: 2px solid var(--color-primary);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+  font-size: 1.125rem;
+}
+.prose-blog code {
+  font-size: 0.875rem;
+  background: var(--color-bg-card-hover);
+  color: var(--color-accent);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-family: var(--font-mono);
+}
+.prose-blog pre {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+.prose-blog pre code {
+  background: none;
+  padding: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+.prose-blog table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-bg-card);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin: 1.5rem 0;
+}
+.prose-blog th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.prose-blog td {
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+.prose-blog td:last-child, .prose-blog th:last-child {
+  border-bottom-color: transparent;
+}
+.prose-blog hr {
+  border-color: var(--color-border);
+  margin: 2rem 0;
+}
+.prose-blog input[type="checkbox"] {
+  margin-right: 0.5rem;
+  accent-color: var(--color-primary);
 }

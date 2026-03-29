@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   GraduationCap,
   Briefcase,
@@ -25,23 +26,23 @@ const timeline = [
   },
   {
     year: "2025-2026",
-    title: "Líder Legal Ops - Colombara Estrategia Legal",
+    title: "Abogado Litigante & Legal Ops Lead - Colombara Estrategia Legal",
     description:
-      "Lidero la unidad de Legal Operations e innovación. Automatizo procesos, implemento agentes IA y diseño mejoras operacionales para equipos de litigación.",
+      "Litigo causas complejas (fraude Ley 20.009, responsabilidad civil, consumidor) y lidero Legal Operations. Gestiono +500 causas activas, construyo dashboards internos, implemento agentes IA y automatizo generación de escritos y contratos.",
     icon: Briefcase,
   },
   {
     year: "2024",
     title: "INCUBA UC + Mejor Rendimiento + Ponencias",
     description:
-      "Proyecto LegalTech seleccionado para INCUBA UC (Centro de Innovación UC). Mejor rendimiento académico en Derecho U. Mayor. Beca Barros y Errázuriz. Ponente internacional.",
+      "Proyecto LegalTech seleccionado para INCUBA UC (Centro de Innovación UC Anacleto Angelini). Mejor rendimiento académico en Derecho U. Mayor. Beca Barros y Errázuriz. Ponente internacional sobre IA y ética en formación jurídica (U. de Chile, CIEPE). Artículo publicado en revista indexada.",
     icon: Award,
   },
   {
-    year: "2023",
-    title: "1er Lugar Innova Day + Deusto",
+    year: "2023-2024",
+    title: "1er Lugar Innova Day + Deusto + Moot Court",
     description:
-      "1er lugar en Innova Day, Legal Management Lab (PUCV). Intercambio en Derecho y TIC en la Universidad de Deusto, España.",
+      "1er lugar en Innova Day, Legal Management Lab (PUCV). Intercambio en Derecho y TIC en la Universidad de Deusto, España. Organizador del Primer Moot Court Internacional en Tecnología y Derecho.",
     icon: Globe,
   },
   {
@@ -55,14 +56,14 @@ const timeline = [
 
 const skills = {
   legal: [
-    "Derecho Civil y Comercial",
+    "Litigación Civil Compleja",
+    "Fraude (Ley 20.009)",
+    "Responsabilidad Civil",
+    "Derecho del Consumidor",
     "Protección de Datos (Ley 21.719)",
     "Compliance y Cumplimiento Normativo",
     "Legal Operations",
-    "Propiedad Intelectual",
-    "Derecho y Tecnología",
     "Ciberseguridad Legal",
-    "Litigación Civil",
   ],
   tech: [
     "TypeScript / JavaScript",
@@ -82,33 +83,54 @@ export default function SobreMiPage() {
       {/* Hero */}
       <section className="py-20 grid-bg relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/8 rounded-full blur-[150px]" />
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-4 block"
-          >
-            Sobre Mí
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl font-bold text-text-primary mb-6"
-          >
-            Abogado que <span className="gradient-text">programa</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-text-secondary leading-relaxed max-w-2xl mx-auto"
-          >
-            No soy un desarrollador que no entiende el derecho, ni un abogado que
-            solo "sabe de tecnología". Soy ambos. Diseño, construyo e implemento
-            soluciones porque vivo en ambos mundos.
-          </motion.p>
+        <div className="relative z-10 mx-auto max-w-5xl px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+            <div className="md:col-span-2 text-center md:text-left">
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-4 block"
+              >
+                Sobre Mí
+              </motion.span>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-4xl md:text-6xl font-bold text-text-primary mb-6"
+              >
+                Abogado que <span className="gradient-text">programa</span>
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-lg text-text-secondary leading-relaxed"
+              >
+                No soy un desarrollador que no entiende el derecho, ni un abogado que
+                solo "sabe de tecnología". Soy ambos. Diseño, construyo e implemento
+                soluciones porque vivo en ambos mundos.
+              </motion.p>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex justify-center"
+            >
+              <div className="relative">
+                <div className="absolute -inset-3 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl blur-xl" />
+                <Image
+                  src="/luca-photo.jpg"
+                  alt="Luca Martino Acevedo"
+                  width={280}
+                  height={350}
+                  className="relative rounded-xl border border-primary/20 object-cover shadow-[0_0_40px_rgba(14,165,233,0.1)]"
+                />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 

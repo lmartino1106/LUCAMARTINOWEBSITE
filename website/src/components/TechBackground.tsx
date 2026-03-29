@@ -17,7 +17,7 @@ const codeSnippets = [
       "  return documentos.map(generarEscrito);",
       "};",
     ],
-    color: "#c9a84c",
+    color: "#0ea5e9",
   },
   {
     lines: [
@@ -31,7 +31,7 @@ const codeSnippets = [
       "  }",
       "}",
     ],
-    color: "#d4b96a",
+    color: "#22d3ee",
   },
   {
     lines: [
@@ -44,7 +44,7 @@ const codeSnippets = [
       "  vencimientos.forEach(notificar);",
       "});",
     ],
-    color: "#c9a84c",
+    color: "#0ea5e9",
   },
   {
     lines: [
@@ -157,7 +157,7 @@ function Particles() {
           vy: (Math.random() - 0.5) * 0.3,
           size: Math.random() * 2 + 0.5,
           opacity: Math.random() * 0.3 + 0.05,
-          color: Math.random() > 0.7 ? "#c9a84c" : "#64748b",
+          color: Math.random() > 0.7 ? "#0ea5e9" : "#64748b",
         });
       }
     }
@@ -176,7 +176,7 @@ function Particles() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(201, 168, 76, ${0.06 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(14, 165, 233, ${0.06 * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -194,8 +194,8 @@ function Particles() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle =
-          p.color === "#c9a84c"
-            ? `rgba(201, 168, 76, ${p.opacity})`
+          p.color === "#0ea5e9"
+            ? `rgba(14, 165, 233, ${p.opacity})`
             : `rgba(100, 116, 139, ${p.opacity})`;
         ctx.fill();
       }
@@ -298,11 +298,11 @@ function CircuitLines() {
             y1={y}
             x2="1200"
             y2={y}
-            stroke="#c9a84c"
+            stroke="#0ea5e9"
             strokeWidth="0.5"
             strokeDasharray="8 12"
           />
-          <circle r="3" fill="#c9a84c">
+          <circle r="3" fill="#0ea5e9">
             <animateMotion
               dur={`${8 + i * 2}s`}
               repeatCount="indefinite"
@@ -326,11 +326,11 @@ function CircuitLines() {
             y1="0"
             x2={x}
             y2="800"
-            stroke="#c9a84c"
+            stroke="#0ea5e9"
             strokeWidth="0.5"
             strokeDasharray="8 12"
           />
-          <circle r="3" fill="#c9a84c">
+          <circle r="3" fill="#0ea5e9">
             <animateMotion
               dur={`${10 + i * 2}s`}
               repeatCount="indefinite"
@@ -358,7 +358,7 @@ function CircuitLines() {
         [1000, 300],
       ].map(([cx, cy], i) => (
         <g key={`node-${i}`}>
-          <circle cx={cx} cy={cy} r="4" fill="none" stroke="#c9a84c" strokeWidth="1">
+          <circle cx={cx} cy={cy} r="4" fill="none" stroke="#0ea5e9" strokeWidth="1">
             <animate
               attributeName="r"
               values="3;6;3"
@@ -372,7 +372,7 @@ function CircuitLines() {
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx={cx} cy={cy} r="1.5" fill="#c9a84c" opacity="0.6" />
+          <circle cx={cx} cy={cy} r="1.5" fill="#0ea5e9" opacity="0.6" />
         </g>
       ))}
     </svg>
@@ -388,7 +388,7 @@ function ScanLine() {
       className="absolute top-0 w-px h-full pointer-events-none"
       style={{
         background:
-          "linear-gradient(to bottom, transparent 0%, rgba(201,168,76,0.15) 50%, transparent 100%)",
+          "linear-gradient(to bottom, transparent 0%, rgba(14,165,233,0.15) 50%, transparent 100%)",
       }}
       animate={{ left: ["0%", "100%"] }}
       transition={{ duration: 12, repeat: Infinity, ease: "linear" }}

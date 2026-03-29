@@ -12,16 +12,18 @@ import {
   Target,
   CheckCircle,
   Clock,
-  ArrowUp,
-  ArrowDown,
-  Minus,
   PenTool,
   RefreshCw,
+  Plus,
+  Save,
+  X,
+  Edit3,
+  Trash2,
 } from "lucide-react";
-import { supabase } from "@/lib/supabase";
 import DashboardAuth from "@/components/DashboardAuth";
 
 interface BrandMetrics {
+  id?: string;
   linkedin_followers: number;
   linkedin_impressions: number;
   linkedin_engagement_rate: number;
@@ -30,6 +32,7 @@ interface BrandMetrics {
   diagnostics_scheduled: number;
   new_connections: number;
   direct_messages: number;
+  week_start?: string;
 }
 
 interface ContentPost {
@@ -53,7 +56,6 @@ interface DailyPrompt {
   completed: boolean;
 }
 
-// Demo data for initial display
 const demoMetrics: BrandMetrics = {
   linkedin_followers: 0,
   linkedin_impressions: 0,
@@ -66,15 +68,15 @@ const demoMetrics: BrandMetrics = {
 };
 
 const demoPosts: ContentPost[] = [
-  { id: "1", title: "Soy abogado y programo. Esta es mi historia.", pillar: "opinion", status: "draft", scheduled_date: "2026-03-31", impressions: 0, likes: 0, comments: 0 },
-  { id: "2", title: "5 tareas que todo abogado debería automatizar hoy", pillar: "tutorial", status: "idea", scheduled_date: "2026-04-02", impressions: 0, likes: 0, comments: 0 },
-  { id: "3", title: "El abogado del futuro no compite contra la IA, la usa", pillar: "opinion", status: "idea", scheduled_date: "2026-04-04", impressions: 0, likes: 0, comments: 0 },
+  { id: "demo-1", title: "Soy abogado y programo. Esta es mi historia.", pillar: "opinion", status: "draft", scheduled_date: "2026-03-31", impressions: 0, likes: 0, comments: 0 },
+  { id: "demo-2", title: "5 tareas que todo abogado debería automatizar hoy", pillar: "tutorial", status: "idea", scheduled_date: "2026-04-02", impressions: 0, likes: 0, comments: 0 },
+  { id: "demo-3", title: "El abogado del futuro no compite contra la IA, la usa", pillar: "opinion", status: "idea", scheduled_date: "2026-04-04", impressions: 0, likes: 0, comments: 0 },
 ];
 
 const demoPrompts: DailyPrompt[] = [
-  { id: "1", date: "2026-03-31", day_of_week: "Lunes", prompt_type: "educativo", prompt_text: "Escribe un post educativo sobre una norma o ley relevante. Valida con Magnar AI.", topic_suggestion: "Ley 21.719 - Protección de Datos: \u00bfqué deben preparar los estudios?", completed: false },
-  { id: "2", date: "2026-04-02", day_of_week: "Miércoles", prompt_type: "tutorial", prompt_text: "Comparte un tutorial práctico o caso de uso real de automatización/IA en el derecho.", topic_suggestion: "5 tareas que todo abogado debería automatizar hoy", completed: false },
-  { id: "3", date: "2026-04-04", day_of_week: "Viernes", prompt_type: "opinion", prompt_text: "Comparte una opinión provocadora o storytelling sobre derecho y tecnología.", topic_suggestion: "El abogado del futuro no compite contra la IA, la usa", completed: false },
+  { id: "demo-1", date: "2026-03-31", day_of_week: "Lunes", prompt_type: "educativo", prompt_text: "Escribe un post educativo sobre una norma o ley relevante.", topic_suggestion: "Ley 21.719 - Protección de Datos: ¿qué deben preparar los estudios?", completed: false },
+  { id: "demo-2", date: "2026-04-02", day_of_week: "Miércoles", prompt_type: "tutorial", prompt_text: "Comparte un tutorial práctico o caso de uso real de automatización/IA en el derecho.", topic_suggestion: "5 tareas que todo abogado debería automatizar hoy", completed: false },
+  { id: "demo-3", date: "2026-04-04", day_of_week: "Viernes", prompt_type: "opinion", prompt_text: "Comparte una opinión provocadora o storytelling sobre derecho y tecnología.", topic_suggestion: "El abogado del futuro no compite contra la IA, la usa", completed: false },
 ];
 
 const pillarColors: Record<string, string> = {
@@ -90,30 +92,34 @@ const statusColors: Record<string, string> = {
   published: "bg-success/10 text-success",
 };
 
+const statusFlow = ["idea", "draft", "review", "published"];
+
 export default function DashboardPage() {
   const [metrics, setMetrics] = useState<BrandMetrics>(demoMetrics);
   const [posts, setPosts] = useState<ContentPost[]>(demoPosts);
   const [prompts, setPrompts] = useState<DailyPrompt[]>(demoPrompts);
   const [activeTab, setActiveTab] = useState<"overview" | "content" | "prompts" | "seo">("overview");
   const [loading, setLoading] = useState(true);
+  const [editingMetrics, setEditingMetrics] = useState(false);
+  const [metricsForm, setMetricsForm] = useState<BrandMetrics>(demoMetrics);
+  const [savingMetrics, setSavingMetrics] = useState(false);
+  const [newPostForm, setNewPostForm] = useState({ title: "", pillar: "educativo", scheduled_date: "" });
+  const [showNewPost, setShowNewPost] = useState(false);
+  const [contacts, setContacts] = useState<{ id: string; name: string; email: string; service: string; created_at: string }[]>([]);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [metricsRes, postsRes, promptsRes] = await Promise.all([
-        supabase.from("brand_metrics").select("*").order("week_start", { ascending: false }).limit(1),
-        supabase.from("content_posts").select("*").order("scheduled_date", { ascending: true }),
-        supabase.from("daily_prompts").select("*").order("date", { ascending: true }),
-      ]);
-
-      if (metricsRes.data && metricsRes.data.length > 0) {
-        setMetrics(metricsRes.data[0]);
-      }
-      if (postsRes.data && postsRes.data.length > 0) {
-        setPosts(postsRes.data);
-      }
-      if (promptsRes.data && promptsRes.data.length > 0) {
-        setPrompts(promptsRes.data);
+      const res = await fetch("/api/dashboard/data");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.metrics) {
+          setMetrics(data.metrics);
+          setMetricsForm(data.metrics);
+        }
+        if (data.posts.length > 0) setPosts(data.posts);
+        if (data.prompts.length > 0) setPrompts(data.prompts);
+        if (data.contacts) setContacts(data.contacts);
       }
     } catch (err) {
       console.error("Error fetching dashboard data:", err);
@@ -125,15 +131,119 @@ export default function DashboardPage() {
     fetchData();
   }, [fetchData]);
 
-  const metricCards = [
-    { label: "Seguidores LinkedIn", value: metrics.linkedin_followers, icon: Users, change: 0 },
-    { label: "Impresiones Semanales", value: metrics.linkedin_impressions, icon: Eye, change: 0 },
-    { label: "Engagement Rate", value: `${metrics.linkedin_engagement_rate}%`, icon: TrendingUp, change: 0 },
-    { label: "Visitas Web", value: metrics.website_visits, icon: BarChart3, change: 0 },
-    { label: "Formularios Recibidos", value: metrics.contact_form_submissions, icon: MessageSquare, change: 0 },
-    { label: "Diagnósticos Agendados", value: metrics.diagnostics_scheduled, icon: Calendar, change: 0 },
-    { label: "Nuevas Conexiones", value: metrics.new_connections, icon: Users, change: 0 },
-    { label: "Mensajes Directos", value: metrics.direct_messages, icon: MessageSquare, change: 0 },
+  async function saveMetrics() {
+    setSavingMetrics(true);
+    try {
+      await fetch("/api/dashboard/data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "save_metrics",
+          payload: {
+            id: metrics.id,
+            linkedin_followers: metricsForm.linkedin_followers,
+            linkedin_impressions: metricsForm.linkedin_impressions,
+            linkedin_engagement_rate: metricsForm.linkedin_engagement_rate,
+            website_visits: metricsForm.website_visits,
+            contact_form_submissions: metricsForm.contact_form_submissions,
+            diagnostics_scheduled: metricsForm.diagnostics_scheduled,
+            new_connections: metricsForm.new_connections,
+            direct_messages: metricsForm.direct_messages,
+          },
+        }),
+      });
+      setMetrics({ ...metricsForm });
+      setEditingMetrics(false);
+    } catch (err) {
+      console.error("Error saving metrics:", err);
+    }
+    setSavingMetrics(false);
+  }
+
+  async function updatePostStatus(postId: string, newStatus: string) {
+    const updated = posts.map((p) => p.id === postId ? { ...p, status: newStatus } : p);
+    setPosts(updated);
+    if (!postId.startsWith("demo-")) {
+      await fetch("/api/dashboard/data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "update_post_status", payload: { id: postId, status: newStatus } }),
+      });
+    }
+  }
+
+  async function togglePromptCompleted(promptId: string, completed: boolean) {
+    const updated = prompts.map((p) => p.id === promptId ? { ...p, completed } : p);
+    setPrompts(updated);
+    if (!promptId.startsWith("demo-")) {
+      await fetch("/api/dashboard/data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "toggle_prompt", payload: { id: promptId, completed } }),
+      });
+    }
+  }
+
+  async function addPost() {
+    if (!newPostForm.title || !newPostForm.scheduled_date) return;
+    const newPost: ContentPost = {
+      id: `temp-${Date.now()}`,
+      title: newPostForm.title,
+      pillar: newPostForm.pillar,
+      status: "idea",
+      scheduled_date: newPostForm.scheduled_date,
+      impressions: 0,
+      likes: 0,
+      comments: 0,
+    };
+
+    const res = await fetch("/api/dashboard/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "add_post",
+        payload: {
+          title: newPost.title,
+          pillar: newPost.pillar,
+          status: "idea",
+          scheduled_date: newPost.scheduled_date,
+          impressions: 0,
+          likes: 0,
+          comments: 0,
+        },
+      }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      setPosts([...posts, data.post || newPost]);
+    } else {
+      setPosts([...posts, newPost]);
+    }
+    setNewPostForm({ title: "", pillar: "educativo", scheduled_date: "" });
+    setShowNewPost(false);
+  }
+
+  async function deletePost(postId: string) {
+    setPosts(posts.filter((p) => p.id !== postId));
+    if (!postId.startsWith("demo-") && !postId.startsWith("temp-")) {
+      await fetch("/api/dashboard/data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "delete_post", payload: { id: postId } }),
+      });
+    }
+  }
+
+  const metricFields: { key: keyof BrandMetrics; label: string; icon: typeof Users }[] = [
+    { key: "linkedin_followers", label: "Seguidores LinkedIn", icon: Users },
+    { key: "linkedin_impressions", label: "Impresiones Semanales", icon: Eye },
+    { key: "linkedin_engagement_rate", label: "Engagement Rate %", icon: TrendingUp },
+    { key: "website_visits", label: "Visitas Web", icon: BarChart3 },
+    { key: "contact_form_submissions", label: "Formularios Recibidos", icon: MessageSquare },
+    { key: "diagnostics_scheduled", label: "Diagnósticos Agendados", icon: Calendar },
+    { key: "new_connections", label: "Nuevas Conexiones", icon: Users },
+    { key: "direct_messages", label: "Mensajes Directos", icon: MessageSquare },
   ];
 
   return (
@@ -161,17 +271,17 @@ export default function DashboardPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-8 p-1 rounded-xl bg-bg-card border border-border w-fit">
+        <div className="flex gap-1 mb-8 p-1 rounded-xl bg-bg-card border border-border w-fit overflow-x-auto">
           {[
             { key: "overview", label: "Resumen", icon: BarChart3 },
             { key: "content", label: "Contenido", icon: FileText },
-            { key: "prompts", label: "Prompts Diarios", icon: PenTool },
+            { key: "prompts", label: "Prompts", icon: PenTool },
             { key: "seo", label: "SEO", icon: Target },
           ].map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key as typeof activeTab)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
                 activeTab === tab.key
                   ? "bg-primary text-white"
                   : "text-text-muted hover:text-text-primary"
@@ -186,29 +296,82 @@ export default function DashboardPage() {
         {/* Overview Tab */}
         {activeTab === "overview" && (
           <div>
+            {/* Metrics Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-text-primary">Métricas</h3>
+              {!editingMetrics ? (
+                <button
+                  onClick={() => { setMetricsForm({ ...metrics }); setEditingMetrics(true); }}
+                  className="flex items-center gap-2 text-sm text-text-muted hover:text-primary transition-colors"
+                >
+                  <Edit3 className="w-4 h-4" /> Editar
+                </button>
+              ) : (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setEditingMetrics(false)}
+                    className="flex items-center gap-1 text-sm text-text-muted hover:text-red-400 transition-colors"
+                  >
+                    <X className="w-4 h-4" /> Cancelar
+                  </button>
+                  <button
+                    onClick={saveMetrics}
+                    disabled={savingMetrics}
+                    className="flex items-center gap-1 text-sm text-primary hover:text-accent transition-colors disabled:opacity-50"
+                  >
+                    <Save className="w-4 h-4" /> {savingMetrics ? "Guardando..." : "Guardar"}
+                  </button>
+                </div>
+              )}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              {metricCards.map((card) => (
+              {metricFields.map((field) => (
                 <div
-                  key={card.label}
+                  key={field.key}
                   className="rounded-xl border border-border bg-bg-card p-6 hover:border-primary/20 transition-colors"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <card.icon className="w-5 h-5 text-text-muted" />
-                    <div className="flex items-center gap-1 text-xs">
-                      {card.change > 0 ? (
-                        <><ArrowUp className="w-3 h-3 text-success" /><span className="text-success">+{card.change}%</span></>
-                      ) : card.change < 0 ? (
-                        <><ArrowDown className="w-3 h-3 text-red-400" /><span className="text-red-400">{card.change}%</span></>
-                      ) : (
-                        <><Minus className="w-3 h-3 text-text-muted" /><span className="text-text-muted">--</span></>
-                      )}
-                    </div>
+                    <field.icon className="w-5 h-5 text-text-muted" />
                   </div>
-                  <p className="text-2xl font-bold text-text-primary">{card.value}</p>
-                  <p className="text-xs text-text-muted mt-1">{card.label}</p>
+                  {editingMetrics ? (
+                    <input
+                      type="number"
+                      step={field.key === "linkedin_engagement_rate" ? "0.1" : "1"}
+                      value={metricsForm[field.key] as number}
+                      onChange={(e) => setMetricsForm({ ...metricsForm, [field.key]: parseFloat(e.target.value) || 0 })}
+                      className="w-full text-2xl font-bold text-text-primary bg-transparent border-b border-primary/40 focus:outline-none focus:border-primary pb-1 mb-1"
+                    />
+                  ) : (
+                    <p className="text-2xl font-bold text-text-primary">
+                      {field.key === "linkedin_engagement_rate" ? `${metrics[field.key]}%` : metrics[field.key]}
+                    </p>
+                  )}
+                  <p className="text-xs text-text-muted mt-1">{field.label}</p>
                 </div>
               ))}
             </div>
+
+            {/* Recent Contacts */}
+            {contacts.length > 0 && (
+              <div className="rounded-xl border border-border bg-bg-card p-8 mb-8">
+                <h3 className="text-lg font-bold text-text-primary mb-4">Últimos Contactos</h3>
+                <div className="space-y-3">
+                  {contacts.map((c) => (
+                    <div key={c.id} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
+                      <div>
+                        <span className="text-sm text-text-primary font-medium">{c.name}</span>
+                        <span className="text-xs text-text-muted ml-3">{c.email}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-primary/10 text-primary">{c.service || "Sin especificar"}</span>
+                        <span className="text-xs text-text-muted">{new Date(c.created_at).toLocaleDateString("es-CL")}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* KPI Targets */}
             <div className="rounded-xl border border-border bg-bg-card p-8">
@@ -218,7 +381,7 @@ export default function DashboardPage() {
               <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                 {[
                   { label: "Posts publicados", current: posts.filter(p => p.status === "published").length, target: 12 },
-                  { label: "Impresiones/post", current: 0, target: 500 },
+                  { label: "Impresiones/post", current: Math.round(metrics.linkedin_impressions / Math.max(posts.filter(p => p.status === "published").length, 1)), target: 500 },
                   { label: "Nuevas conexiones", current: metrics.new_connections, target: 200 },
                   { label: "Mensajes directos", current: metrics.direct_messages, target: 10 },
                   { label: "Diagnósticos", current: metrics.diagnostics_scheduled, target: 3 },
@@ -249,7 +412,58 @@ export default function DashboardPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold text-text-primary">Pipeline de Contenido</h3>
+              <button
+                onClick={() => setShowNewPost(!showNewPost)}
+                className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
+              >
+                <Plus className="w-4 h-4" /> Nuevo Post
+              </button>
             </div>
+
+            {/* New Post Form */}
+            {showNewPost && (
+              <div className="rounded-xl border border-primary/30 bg-primary/5 p-6 space-y-4">
+                <input
+                  type="text"
+                  placeholder="Título del post"
+                  value={newPostForm.title}
+                  onChange={(e) => setNewPostForm({ ...newPostForm, title: e.target.value })}
+                  className="w-full rounded-lg border border-border bg-bg-dark px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:border-primary focus:outline-none"
+                />
+                <div className="grid grid-cols-2 gap-4">
+                  <select
+                    value={newPostForm.pillar}
+                    onChange={(e) => setNewPostForm({ ...newPostForm, pillar: e.target.value })}
+                    className="rounded-lg border border-border bg-bg-dark px-4 py-3 text-sm text-text-primary focus:border-primary focus:outline-none"
+                  >
+                    <option value="educativo">Educativo</option>
+                    <option value="tutorial">Tutorial</option>
+                    <option value="opinion">Opinión</option>
+                  </select>
+                  <input
+                    type="date"
+                    value={newPostForm.scheduled_date}
+                    onChange={(e) => setNewPostForm({ ...newPostForm, scheduled_date: e.target.value })}
+                    className="rounded-lg border border-border bg-bg-dark px-4 py-3 text-sm text-text-primary focus:border-primary focus:outline-none"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={addPost}
+                    className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
+                  >
+                    <Save className="w-4 h-4" /> Guardar
+                  </button>
+                  <button
+                    onClick={() => setShowNewPost(false)}
+                    className="flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm text-text-muted hover:text-text-primary transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            )}
+
             {posts.map((post) => (
               <div
                 key={post.id}
@@ -261,19 +475,35 @@ export default function DashboardPage() {
                       <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${pillarColors[post.pillar] || ""}`}>
                         {post.pillar.toUpperCase()}
                       </span>
-                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${statusColors[post.status] || ""}`}>
-                        {post.status.toUpperCase()}
-                      </span>
+                      {/* Status selector */}
+                      <select
+                        value={post.status}
+                        onChange={(e) => updatePostStatus(post.id, e.target.value)}
+                        className={`text-[10px] font-mono px-2 py-0.5 rounded border-none cursor-pointer focus:outline-none ${statusColors[post.status] || ""}`}
+                      >
+                        {statusFlow.map((s) => (
+                          <option key={s} value={s}>{s.toUpperCase()}</option>
+                        ))}
+                      </select>
                       <span className="text-xs text-text-muted flex items-center gap-1">
                         <Calendar className="w-3 h-3" /> {post.scheduled_date}
                       </span>
                     </div>
                     <h4 className="text-text-primary font-semibold">{post.title}</h4>
                   </div>
-                  <div className="flex items-center gap-6 text-xs text-text-muted">
-                    <span className="flex items-center gap-1"><Eye className="w-3 h-3" /> {post.impressions}</span>
-                    <span className="flex items-center gap-1"><TrendingUp className="w-3 h-3" /> {post.likes}</span>
-                    <span className="flex items-center gap-1"><MessageSquare className="w-3 h-3" /> {post.comments}</span>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-6 text-xs text-text-muted">
+                      <span className="flex items-center gap-1"><Eye className="w-3 h-3" /> {post.impressions}</span>
+                      <span className="flex items-center gap-1"><TrendingUp className="w-3 h-3" /> {post.likes}</span>
+                      <span className="flex items-center gap-1"><MessageSquare className="w-3 h-3" /> {post.comments}</span>
+                    </div>
+                    <button
+                      onClick={() => deletePost(post.id)}
+                      className="text-text-muted hover:text-red-400 transition-colors"
+                      title="Eliminar post"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -288,7 +518,7 @@ export default function DashboardPage() {
               <h3 className="text-lg font-bold text-text-primary mb-2">Sistema de Prompts Diarios</h3>
               <p className="text-sm text-text-secondary">
                 Cada día de publicación (Lun, Mié, Vie) tienes un prompt con el tipo de contenido
-                y sugerencia de tema. T\u00fa decides qué escribir cada día.
+                y sugerencia de tema. Tú decides qué escribir cada día. Haz clic en el icono para marcar como completado.
               </p>
             </div>
             {prompts.map((prompt) => (
@@ -314,13 +544,17 @@ export default function DashboardPage() {
                       <span className="text-primary font-mono text-xs">Sugerencia:</span> {prompt.topic_suggestion}
                     </p>
                   </div>
-                  <div className="ml-4">
+                  <button
+                    onClick={() => togglePromptCompleted(prompt.id, !prompt.completed)}
+                    className="ml-4 hover:scale-110 transition-transform"
+                    title={prompt.completed ? "Marcar como pendiente" : "Marcar como completado"}
+                  >
                     {prompt.completed ? (
                       <CheckCircle className="w-6 h-6 text-success" />
                     ) : (
-                      <Clock className="w-6 h-6 text-text-muted" />
+                      <Clock className="w-6 h-6 text-text-muted hover:text-primary transition-colors" />
                     )}
-                  </div>
+                  </button>
                 </div>
               </div>
             ))}

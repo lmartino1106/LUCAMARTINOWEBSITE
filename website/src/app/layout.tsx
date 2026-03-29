@@ -7,23 +7,32 @@ import JsonLd from "@/components/JsonLd";
 export const metadata: Metadata = {
   metadataBase: new URL("https://lucamartino.cl"),
   title: {
-    default: "Luca Martino | Abogado & Developer - Automatizaci\u00f3n e IA Legal",
+    default: "Luca Martino | Abogado & Developer - Automatización e IA Legal",
     template: "%s | Luca Martino",
   },
   description:
-    "Abogado y Desarrollador. Automatizo estudios jur\u00eddicos con IA, construyo software legal y dise\u00f1o embudos de captaci\u00f3n. Mejor rendimiento acad\u00e9mico U. Mayor. Proyecto INCUBA UC.",
+    "Abogado y Desarrollador. Automatizo estudios jurídicos con IA, construyo software legal y diseño embudos de captación. Mejor rendimiento académico U. Mayor. Proyecto INCUBA UC.",
   keywords: [
     "abogado chile",
+    "abogado santiago",
+    "abogado litigante chile",
+    "abogado litigante santiago",
+    "asesoría legal chile",
     "legaltech chile",
-    "automatizaci\u00f3n legal",
+    "automatización legal",
     "IA para abogados",
     "legal ops",
-    "innovaci\u00f3n legal",
-    "software jur\u00eddico",
+    "innovación legal",
+    "software jurídico",
     "luca martino",
+    "luca martino abogado",
     "abogado developer",
-    "protecci\u00f3n de datos chile",
+    "abogado programador",
+    "protección de datos chile",
     "compliance chile",
+    "abogado tecnología",
+    "abogado inteligencia artificial",
+    "estudio jurídico santiago",
   ],
   authors: [{ name: "Luca Martino Acevedo" }],
   creator: "Luca Martino Acevedo",
@@ -32,22 +41,15 @@ export const metadata: Metadata = {
     locale: "es_CL",
     url: "https://lucamartino.cl",
     siteName: "Luca Martino | Abogado & Developer",
-    title: "Luca Martino | Abogado & Developer - Automatizaci\u00f3n e IA Legal",
+    title: "Luca Martino | Abogado & Developer - Automatización e IA Legal",
     description:
-      "Abogado y Desarrollador. Automatizo estudios jur\u00eddicos con IA. Mejor rendimiento acad\u00e9mico U. Mayor. Proyecto INCUBA UC.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Luca Martino - Abogado & Developer",
-      },
-    ],
+      "Abogado y Desarrollador. Automatizo estudios jurídicos con IA. Mejor rendimiento académico U. Mayor. Proyecto INCUBA UC.",
+    images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Luca Martino | Abogado & Developer",
-    description: "Automatizo estudios jur\u00eddicos con IA. Abogado + Programador.",
+    description: "Automatizo estudios jurídicos con IA. Abogado + Programador.",
   },
   robots: {
     index: true,
@@ -70,6 +72,17 @@ export default function RootLayout({
   return (
     <html lang="es-CL">
       <head>
+        <meta name="google-site-verification" content="-rlM85BNQ4CLPjblNWycEjgv6VssvdZyZo4h6x9MnEs" />
+        <meta name="google-site-verification" content="-iIoUIYKVfmmZzznwtehVoacKPyu1Hy3vgaTr7xWwYI" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3BEGNSVF7"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-K3BEGNSVF7');`,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

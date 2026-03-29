@@ -5,7 +5,7 @@ export default function JsonLd() {
     name: "Luca Martino Acevedo",
     jobTitle: "Abogado & Desarrollador de Software",
     description:
-      "Abogado con mejor rendimiento acad\u00e9mico U. Mayor y Desarrollador Full Stack. Especialista en LegalTech, automatizaci\u00f3n legal e IA para abogados.",
+      "Abogado con mejor rendimiento académico U. Mayor y Desarrollador Full Stack. Especialista en LegalTech, automatización legal e IA para abogados.",
     url: "https://lucamartino.cl",
     sameAs: [
       "https://www.linkedin.com/in/lucamartinoacevedo",
@@ -22,23 +22,23 @@ export default function JsonLd() {
       },
       {
         "@type": "EducationalOrganization",
-        name: "Pontificia Universidad Cat\u00f3lica de Chile",
+        name: "Pontificia Universidad Católica de Chile",
       },
     ],
     knowsAbout: [
       "LegalTech",
       "Legal Operations",
       "Inteligencia Artificial",
-      "Automatizaci\u00f3n Legal",
-      "Protecci\u00f3n de Datos",
+      "Automatización Legal",
+      "Protección de Datos",
       "Compliance",
       "Desarrollo Web",
       "Next.js",
       "TypeScript",
     ],
     award: [
-      "Mejor rendimiento acad\u00e9mico - Carrera de Derecho, U. Mayor",
-      "Beca Barros y Err\u00e1zuriz - Menci\u00f3n Honrosa 2024",
+      "Mejor rendimiento académico - Carrera de Derecho, U. Mayor",
+      "Beca Barros y Errázuriz - Mención Honrosa 2024",
       "1er lugar Innova Day - Legal Management Lab, PUCV 2023",
       "Proyecto LegalTech seleccionado INCUBA UC 2024",
     ],
@@ -47,24 +47,47 @@ export default function JsonLd() {
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    name: "Luca Martino - Servicios LegalTech",
+    name: "Luca Martino - Abogado & Servicios LegalTech",
     description:
-      "Automatizaci\u00f3n legal, IA para abogados, desarrollo web y software a medida para estudios jur\u00eddicos en Chile.",
+      "Abogado litigante y desarrollador. Automatización legal, IA para abogados, asesoría legal, desarrollo web y software a medida para estudios jurídicos en Chile.",
     url: "https://lucamartino.cl/servicios",
+    email: "contacto@lucamartino.cl",
     provider: {
       "@type": "Person",
       name: "Luca Martino Acevedo",
     },
-    areaServed: {
-      "@type": "Country",
-      name: "Chile",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Santiago",
+      addressRegion: "Región Metropolitana",
+      addressCountry: "CL",
     },
-    serviceType: [
-      "Automatizaci\u00f3n de Procesos Legales",
-      "Inteligencia Artificial para Abogados",
-      "Desarrollo Web para Estudios Jur\u00eddicos",
-      "Software a Medida Legal",
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: -33.4489,
+      longitude: -70.6693,
+    },
+    areaServed: [
+      {
+        "@type": "City",
+        name: "Santiago",
+      },
+      {
+        "@type": "Country",
+        name: "Chile",
+      },
     ],
+    serviceType: [
+      "Asesoría Legal",
+      "Litigación Civil",
+      "Automatización de Procesos Legales",
+      "Inteligencia Artificial para Abogados",
+      "Desarrollo Web para Estudios Jurídicos",
+      "Software a Medida Legal",
+      "Protección de Datos Personales",
+      "Compliance",
+    ],
+    priceRange: "$$",
   };
 
   return (

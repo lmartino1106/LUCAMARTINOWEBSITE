@@ -94,14 +94,28 @@ ALTER TABLE brand_metrics ENABLE ROW LEVEL SECURITY;
 ALTER TABLE seo_keywords ENABLE ROW LEVEL SECURITY;
 ALTER TABLE daily_prompts ENABLE ROW LEVEL SECURITY;
 
--- Policies for public insert (contact form, page views)
-CREATE POLICY "Allow public insert on contacts" ON contacts FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public insert on page_views" ON page_views FOR INSERT WITH CHECK (true);
+-- Public: only INSERT on contacts and page_views (for contact form and analytics)
+CREATE POLICY "Allow public insert on contacts" ON contacts
+  FOR INSERT TO anon WITH CHECK (true);
 
--- Service role has full access (for dashboard)
-CREATE POLICY "Service role full access contacts" ON contacts FOR ALL USING (true);
-CREATE POLICY "Service role full access page_views" ON page_views FOR ALL USING (true);
-CREATE POLICY "Service role full access content_posts" ON content_posts FOR ALL USING (true);
-CREATE POLICY "Service role full access brand_metrics" ON brand_metrics FOR ALL USING (true);
-CREATE POLICY "Service role full access seo_keywords" ON seo_keywords FOR ALL USING (true);
-CREATE POLICY "Service role full access daily_prompts" ON daily_prompts FOR ALL USING (true);
+CREATE POLICY "Allow public insert on page_views" ON page_views
+  FOR INSERT TO anon WITH CHECK (true);
+
+-- Service role: full access to all tables (for dashboard API routes)
+CREATE POLICY "Service role full access contacts" ON contacts
+  FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+CREATE POLICY "Service role full access page_views" ON page_views
+  FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+CREATE POLICY "Service role full access content_posts" ON content_posts
+  FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+CREATE POLICY "Service role full access brand_metrics" ON brand_metrics
+  FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+CREATE POLICY "Service role full access seo_keywords" ON seo_keywords
+  FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+CREATE POLICY "Service role full access daily_prompts" ON daily_prompts
+  FOR ALL TO service_role USING (true) WITH CHECK (true);

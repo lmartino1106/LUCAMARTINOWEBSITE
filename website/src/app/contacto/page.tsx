@@ -6,6 +6,7 @@ import AnimateOnScroll from "@/components/AnimateOnScroll";
 
 const serviceOptions = [
   "Diagnóstico Digital (Gratis)",
+  "Asesoría Legal",
   "IA para Abogados",
   "Automatización de Procesos Legales",
   "Web + Embudo Comercial",
