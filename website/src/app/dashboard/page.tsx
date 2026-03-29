@@ -22,6 +22,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import DashboardAuth from "@/components/DashboardAuth";
+import dynamic from "next/dynamic";
+const VideoPreview = dynamic(() => import("@/components/VideoPreview"), { ssr: false });
 
 interface BrandMetrics {
   id?: string;
@@ -791,6 +793,10 @@ export default function DashboardPage() {
                   </div>
                 )}
               </div>
+            )}
+
+            {generatedContent && contentType !== "post" && (
+              <VideoPreview type={contentType} content={generatedContent as Record<string, unknown>} />
             )}
           </div>
         )}
