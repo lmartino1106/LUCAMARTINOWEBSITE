@@ -618,11 +618,11 @@ export default function DashboardPage() {
                   { task: "Sitemap.xml generado", done: true },
                   { task: "Robots.txt configurado", done: true },
                   { task: "Open Graph y Twitter cards", done: true },
-                  { task: "Google Search Console conectado", done: false },
-                  { task: "Google Analytics instalado", done: false },
+                  { task: "Google Search Console conectado", done: true },
+                  { task: "Google Analytics instalado", done: true },
                   { task: "Google Business Profile creado", done: false },
-                  { task: "Registrar dominio lucamartino.cl", done: false },
-                  { task: "Certificado SSL activo", done: false },
+                  { task: "Registrar dominio lucamartino.cl", done: true },
+                  { task: "Certificado SSL activo", done: true },
                 ].map((item) => (
                   <div key={item.task} className="flex items-center gap-3">
                     <CheckCircle className={`w-4 h-4 ${item.done ? "text-success" : "text-text-muted"}`} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Mail, Clock, CheckCircle } from "lucide-react";
+import { Send, Mail, Clock, CheckCircle, ArrowRight } from "lucide-react";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 
 const serviceOptions = [
@@ -207,6 +207,9 @@ export default function ContactoPage() {
                     </li>
                   ))}
                 </ul>
+                <a href="https://calendly.com/lucamartinoacevedo/diagnostico" target="_blank" rel="noopener noreferrer" className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors hover:shadow-[0_0_20px_rgba(14,165,233,0.3)]">
+                  Agendar Ahora <ArrowRight className="w-4 h-4" />
+                </a>
               </div>
 
               <div className="rounded-2xl border border-border bg-bg-card p-8">

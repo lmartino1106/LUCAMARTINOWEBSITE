@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
+import PageViewTracker from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lucamartino.cl"),
@@ -96,6 +97,7 @@ gtag('config', 'G-K3BEGNSVF7');`,
       </head>
       <body className="min-h-screen antialiased">
         <JsonLd />
+        <PageViewTracker />
         <Navbar />
         <main>{children}</main>
         <Footer />
