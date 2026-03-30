@@ -13,10 +13,14 @@ export const metadata: Metadata = {
     "abogado innovación",
     "mejor rendimiento derecho u mayor",
   ],
+  alternates: {
+    canonical: "https://lucamartino.cl/sobre-mi",
+  },
   openGraph: {
     title: "Luca Martino | Abogado & Developer",
     description:
       "Abogado litigante y desarrollador full stack. Mejor rendimiento académico U. Mayor. Proyecto INCUBA UC.",
+    url: "https://lucamartino.cl/sobre-mi",
   },
 };
 

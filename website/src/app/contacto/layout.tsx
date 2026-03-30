@@ -11,10 +11,14 @@ export const metadata: Metadata = {
     "consulta automatización legal",
     "contactar abogado developer",
   ],
+  alternates: {
+    canonical: "https://lucamartino.cl/contacto",
+  },
   openGraph: {
     title: "Contacto | Luca Martino",
     description:
       "Agenda tu diagnóstico digital gratis. Automatización e IA para tu estudio jurídico.",
+    url: "https://lucamartino.cl/contacto",
   },
 };
 

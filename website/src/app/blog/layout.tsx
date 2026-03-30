@@ -13,10 +13,14 @@ export const metadata: Metadata = {
     "tecnología jurídica",
     "innovación legal chile",
   ],
+  alternates: {
+    canonical: "https://lucamartino.cl/blog",
+  },
   openGraph: {
     title: "Blog LegalTech | Luca Martino",
     description:
       "Artículos sobre IA, automatización y tecnología para abogados en Chile.",
+    url: "https://lucamartino.cl/blog",
   },
 };
 

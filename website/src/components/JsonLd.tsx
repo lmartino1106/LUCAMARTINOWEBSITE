@@ -7,6 +7,7 @@ export default function JsonLd() {
     description:
       "Abogado con mejor rendimiento académico U. Mayor y Desarrollador Full Stack. Especialista en LegalTech, automatización legal e IA para abogados.",
     url: "https://lucamartino.cl",
+    image: "https://lucamartino.cl/luca-photo.jpg",
     sameAs: [
       "https://www.linkedin.com/in/lucamartinoacevedo",
       "https://github.com/lmartino1106",
@@ -90,6 +91,65 @@ export default function JsonLd() {
     priceRange: "$$",
   };
 
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Luca Martino | Abogado & Developer",
+    url: "https://lucamartino.cl",
+    description:
+      "Abogado y Desarrollador. Automatizo estudios jurídicos con IA, construyo software legal y diseño embudos de captación.",
+    publisher: {
+      "@type": "Person",
+      name: "Luca Martino Acevedo",
+    },
+    inLanguage: "es-CL",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: "https://lucamartino.cl/blog?q={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Inicio",
+        item: "https://lucamartino.cl",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Servicios",
+        item: "https://lucamartino.cl/servicios",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "Blog",
+        item: "https://lucamartino.cl/blog",
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: "Sobre Mí",
+        item: "https://lucamartino.cl/sobre-mi",
+      },
+      {
+        "@type": "ListItem",
+        position: 5,
+        name: "Contacto",
+        item: "https://lucamartino.cl/contacto",
+      },
+    ],
+  };
+
   return (
     <>
       <script
@@ -99,6 +159,14 @@ export default function JsonLd() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
     </>
   );

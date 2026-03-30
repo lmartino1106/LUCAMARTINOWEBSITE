@@ -75,10 +75,10 @@ export default function Footer() {
                 Servicios
               </h4>
               <div className="flex flex-col gap-3">
-                <span className="text-sm text-text-secondary">Automatización Legal</span>
-                <span className="text-sm text-text-secondary">IA para Abogados</span>
-                <span className="text-sm text-text-secondary">Web + Embudo Comercial</span>
-                <span className="text-sm text-text-secondary">Software a Medida</span>
+                <Link href="/servicios" className="text-sm text-text-secondary hover:text-primary transition-colors">Automatización Legal</Link>
+                <Link href="/servicios" className="text-sm text-text-secondary hover:text-primary transition-colors">IA para Abogados</Link>
+                <Link href="/servicios" className="text-sm text-text-secondary hover:text-primary transition-colors">Web + Embudo Comercial</Link>
+                <Link href="/servicios" className="text-sm text-text-secondary hover:text-primary transition-colors">Software a Medida</Link>
               </div>
             </div>
           </div>

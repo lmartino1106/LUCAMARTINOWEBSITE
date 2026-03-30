@@ -23,10 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       post.pillar.toLowerCase(),
       "luca martino",
     ],
+    alternates: {
+      canonical: `https://lucamartino.cl/blog/${slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
+      url: `https://lucamartino.cl/blog/${slug}`,
       publishedTime: post.date,
       authors: ["Luca Martino"],
       tags: [post.pillar, "LegalTech", "Chile"],

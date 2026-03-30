@@ -1,0 +1,21 @@
+{
+  "name": "Luca Martino | Abogado & Developer",
+  "short_name": "Luca Martino",
+  "description": "Abogado y Desarrollador. Automatización e IA Legal para estudios jurídicos.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "/icon",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

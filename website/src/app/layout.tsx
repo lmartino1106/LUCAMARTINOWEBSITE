@@ -1,9 +1,23 @@
 import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import PageViewTracker from "@/components/PageViewTracker";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lucamartino.cl"),
@@ -37,6 +51,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Luca Martino Acevedo" }],
   creator: "Luca Martino Acevedo",
+  alternates: {
+    canonical: "https://lucamartino.cl",
+  },
   openGraph: {
     type: "website",
     locale: "es_CL",
@@ -71,31 +88,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es-CL">
+    <html lang="es-CL" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <meta name="google-site-verification" content="-rlM85BNQ4CLPjblNWycEjgv6VssvdZyZo4h6x9MnEs" />
         <meta name="google-site-verification" content="-iIoUIYKVfmmZzznwtehVoacKPyu1Hy3vgaTr7xWwYI" />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3BEGNSVF7"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-K3BEGNSVF7');`,
-          }}
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#0a0a0f" />
       </head>
       <body className="min-h-screen antialiased">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-K3BEGNSVF7"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-K3BEGNSVF7');`}
+        </Script>
         <JsonLd />
         <PageViewTracker />
         <Navbar />

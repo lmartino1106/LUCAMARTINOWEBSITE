@@ -26,8 +26,37 @@ export default async function BlogPostPage({ params }: Props) {
   const nextPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
   const prevPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      "@type": "Person",
+      name: "Luca Martino Acevedo",
+      url: "https://lucamartino.cl",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Luca Martino Acevedo",
+      url: "https://lucamartino.cl",
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://lucamartino.cl/blog/${slug}`,
+    },
+    inLanguage: "es-CL",
+    articleSection: post.pillar,
+  };
+
   return (
     <div className="pt-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <article className="py-20 grid-bg relative">
         <div className="absolute top-1/4 right-0 w-[400px] h-[300px] bg-accent/8 rounded-full blur-[120px]" />
         <div className="relative z-10 mx-auto max-w-3xl px-6">

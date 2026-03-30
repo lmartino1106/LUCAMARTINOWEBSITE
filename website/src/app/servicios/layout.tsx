@@ -13,10 +13,14 @@ export const metadata: Metadata = {
     "embudo comercial abogados",
     "diagnóstico digital estudio jurídico",
   ],
+  alternates: {
+    canonical: "https://lucamartino.cl/servicios",
+  },
   openGraph: {
     title: "Servicios LegalTech | Luca Martino",
     description:
       "Automatización, IA y software para estudios jurídicos. Diagnóstico digital gratis.",
+    url: "https://lucamartino.cl/servicios",
   },
 };
 

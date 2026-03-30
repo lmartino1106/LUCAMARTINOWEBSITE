@@ -1,0 +1,49 @@
+# Luca Martino — Abogado & Developer
+
+> Abogado litigante y desarrollador full stack especializado en LegalTech, automatización legal e inteligencia artificial para estudios jurídicos en Chile.
+
+## Quién soy
+
+Soy Luca Martino Acevedo, abogado titulado con mejor rendimiento académico en Derecho de la Universidad Mayor y desarrollador full stack. Trabajo como abogado litigante en Colombara Estrategia Legal y lidero Legal Operations. Mi proyecto LegalTech fue seleccionado para INCUBA UC (Centro de Innovación UC Anacleto Angelini).
+
+## Qué hago
+
+- **Litigación civil compleja**: fraude (Ley 20.009), responsabilidad civil, derecho del consumidor
+- **Automatización legal**: flujos de trabajo automatizados, generación de documentos, alertas de plazos
+- **IA para abogados**: asistentes IA personalizados, análisis de contratos, búsqueda jurisprudencial
+- **Desarrollo web y software**: sitios web para estudios jurídicos, dashboards de causas, portales de cliente
+- **Protección de datos y compliance**: Ley 21.719, cumplimiento normativo
+
+## Servicios
+
+1. **Diagnóstico Digital Gratis** — Sesión de 30 minutos para identificar procesos automatizables
+2. **IA para Abogados** — Implementación de asistentes IA personalizados
+3. **Automatización de Procesos Legales** — Eliminación de tareas repetitivas
+4. **Web + Embudo Comercial** — Presencia web profesional y sistema de captación
+5. **Software a Medida** — Herramientas específicas para estudios jurídicos
+
+## Formación
+
+- Derecho, Universidad Mayor (Mejor rendimiento académico)
+- Intercambio en Derecho y TIC, Universidad de Deusto, España
+- Diplomado en Protección de Datos Personales, PUC
+- Diplomado en Cumplimiento Normativo, TOP Compliance México
+- Proyecto INCUBA UC 2024
+
+## Reconocimientos
+
+- Mejor rendimiento académico, Carrera de Derecho, U. Mayor
+- Beca Barros y Errázuriz, Mención Honrosa 2024
+- 1er lugar Innova Day, Legal Management Lab, PUCV 2023
+- Ponente internacional sobre IA y ética en formación jurídica
+
+## Contacto
+
+- Web: https://lucamartino.cl
+- Email: lucamartinoacevedo@gmail.com
+- LinkedIn: https://www.linkedin.com/in/lucamartinoacevedo
+- GitHub: https://github.com/lmartino1106
+
+## Ubicación
+
+Santiago, Región Metropolitana, Chile
