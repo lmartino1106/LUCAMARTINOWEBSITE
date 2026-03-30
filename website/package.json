@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "remotion:studio": "remotion studio src/remotion/index.ts",
+    "remotion:render:reel": "remotion render src/remotion/index.ts ReelEducativo out/reel.mp4",
+    "remotion:render:carrusel": "remotion render src/remotion/index.ts CarruselAnimado out/carrusel.mp4",
+    "remotion:render:presentacion": "remotion render src/remotion/index.ts VideoPresentacion out/presentacion.mp4"
   },
   "keywords": [],
   "author": "",
