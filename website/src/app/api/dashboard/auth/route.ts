@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const { password } = await request.json();
-  const dashboardPassword = process.env.DASHBOARD_PASSWORD;
+  const dashboardPassword = process.env.DASHBOARD_PASSWORD || process.env.ADMIN_PASSWORD;
 
   if (!dashboardPassword) {
     return NextResponse.json(
