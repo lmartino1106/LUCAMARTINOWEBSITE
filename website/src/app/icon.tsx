@@ -13,21 +13,16 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #0ea5e9, #22d3ee)",
+          background: "#0d1b2e",
           borderRadius: 6,
-          fontFamily: "system-ui, sans-serif",
+          border: "1.5px solid #c9a96e",
+          fontFamily: "Georgia, serif",
         }}
       >
-        <span
-          style={{
-            fontSize: 20,
-            fontWeight: 800,
-            color: "white",
-            lineHeight: 1,
-          }}
-        >
-          L
-        </span>
+        <div style={{ display: "flex", alignItems: "flex-end", gap: 0, lineHeight: 1 }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a96e", letterSpacing: "-0.5px" }}>L</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "#e8e8e8", letterSpacing: "-0.5px" }}>M</span>
+        </div>
       </div>
     ),
     { ...size }

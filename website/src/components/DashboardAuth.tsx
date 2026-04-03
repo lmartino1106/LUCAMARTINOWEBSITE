@@ -6,7 +6,7 @@ import { Lock, ArrowRight } from "lucide-react";
 export default function DashboardAuth({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | false>(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -30,10 +30,11 @@ export default function DashboardAuth({ children }: { children: React.ReactNode 
         setAuthenticated(true);
         sessionStorage.setItem("dashboard_auth", "true");
       } else {
-        setError(true);
+        const body = await res.json().catch(() => ({}));
+        setError(body?.error || "Contraseña incorrecta");
       }
     } catch {
-      setError(true);
+      setError("Error de conexión. Intenta de nuevo.");
     }
     setLoading(false);
   }
@@ -55,7 +56,7 @@ export default function DashboardAuth({ children }: { children: React.ReactNode 
             <input
               type="password"
               value={password}
-              onChange={(e) => { setPassword(e.target.value); setError(false); }}
+              onChange={(e) => { setPassword(e.target.value); setError(false as false); }}
               placeholder="Contraseña"
               className={`w-full rounded-lg border px-4 py-3 text-sm bg-bg-dark text-text-primary placeholder:text-text-muted focus:outline-none transition-colors ${
                 error ? "border-red-400 focus:border-red-400" : "border-border focus:border-primary"
@@ -63,7 +64,7 @@ export default function DashboardAuth({ children }: { children: React.ReactNode 
               autoFocus
             />
             {error && (
-              <p className="text-xs text-red-400">Contraseña incorrecta</p>
+              <p className="text-xs text-red-400">{error}</p>
             )}
             <button
               type="submit"

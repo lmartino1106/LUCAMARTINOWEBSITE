@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -25,15 +24,21 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg-dark/80 backdrop-blur-xl"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center group">
-          <Image
-            src="/logo-horizontal.jpg"
-            alt="Luca Martino - Abogado · Legal Ops · Tech"
-            width={180}
-            height={40}
-            className="h-10 w-auto"
-            priority
-          />
+        <Link href="/" className="flex items-center gap-3 group">
+          {/* Monograma LM */}
+          <div className="w-9 h-9 rounded-lg border border-[#c9a96e] bg-[#0d1b2e] flex items-center justify-center flex-shrink-0 group-hover:border-primary transition-colors">
+            <span className="font-serif font-bold text-[13px] leading-none" style={{ color: "#c9a96e" }}>L</span>
+            <span className="font-serif font-bold text-[13px] leading-none text-white">M</span>
+          </div>
+          {/* Wordmark */}
+          <div className="flex flex-col leading-none">
+            <span className="text-sm font-semibold tracking-[0.18em] uppercase text-white group-hover:text-primary transition-colors">
+              Luca Martino
+            </span>
+            <span className="text-[9px] tracking-[0.22em] uppercase text-[#c9a96e] mt-0.5">
+              Abogado · Legal Ops · Tech
+            </span>
+          </div>
         </Link>
 
         {/* Desktop */}
